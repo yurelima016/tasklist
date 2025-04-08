@@ -1,4 +1,3 @@
-/* Estlização geral */
 *{
     margin: 0;
     padding: 0;
@@ -14,7 +13,7 @@ body{
     flex-wrap: wrap;
 }
 
-/* Estilo cabeçalho */
+/* Header styles */
 header{
     width: 100%;
     height: 10vh;
@@ -32,7 +31,7 @@ header{
     align-content: center;
 }
 
-/* Estilo corpo */
+/* Main styles */
 main{
     width: 100%;
     min-height: 85vh;
@@ -45,7 +44,6 @@ main{
 #contentContainer{
     width: 50%;
     height: 100%;
-    /* background-color: red; */
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
@@ -77,7 +75,6 @@ main{
 #taskContainer{
     min-width: 100%;
     height: auto;
-    /* background-color: palegreen; */
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -91,8 +88,7 @@ main{
     background-color: #303030;
 }
 
-/* Estilo rodapé */
-
+/* Footer styles */
 footer{
     width: 100%;
     height: 5vh;
@@ -100,14 +96,14 @@ footer{
     justify-content: center;
     align-items: center;
     border-top: #fff solid 1px;
+}
 
-    & #pageCreator{
-        width: auto;
-        height: 100%;
-        font-size: 1.5vh;
-        color: #fff;
-        text-align: center;
-        align-content: center;
-        cursor: pointer;
-    }
+#pageCreator{
+    width: auto;
+    height: 100%;
+    font-size: 1.5vh;
+    color: #fff;
+    text-align: center;
+    align-content: center;
+    cursor: pointer;
 }
