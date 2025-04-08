@@ -1,0 +1,63 @@
+/* Estlização geral */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+body{
+    width: 100vw;
+    height: auto;
+    background-color: #161616;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* Estilo cabeçalho */
+header{
+    width: 100%;
+    height: 10vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    & #pageTitle{
+        width: auto;
+        height: 100%;
+        font-size: 8vh;
+        color: #fff;
+        text-align: center;
+        align-content: center;
+    }
+}
+
+/* Estilo corpo */
+main{
+    width: 100%;
+    height: 85vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Estilo rodapé */
+
+footer{
+    width: 100%;
+    height: 5vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: #fff solid 1px;
+
+    & #pageCreator{
+        width: auto;
+        height: 100%;
+        font-size: 1.5vh;
+        color: #fff;
+        text-align: center;
+        align-content: center;
+        cursor: pointer;
+    }
+}
