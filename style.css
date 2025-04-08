@@ -7,7 +7,7 @@
 }
 
 body{
-    width: 100vw;
+    max-width: 100vw;
     height: auto;
     background-color: #161616;
     display: flex;
@@ -21,24 +21,74 @@ header{
     display: flex;
     justify-content: center;
     align-items: center;
+}
 
-    & #pageTitle{
-        width: auto;
-        height: 100%;
-        font-size: 8vh;
-        color: #fff;
-        text-align: center;
-        align-content: center;
-    }
+#pageTitle{
+    width: auto;
+    height: 100%;
+    font-size: 8vh;
+    color: #fff;
+    text-align: center;
+    align-content: center;
 }
 
 /* Estilo corpo */
 main{
     width: 100%;
-    height: 85vh;
+    min-height: 85vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-top: 2vh;
+}
+
+#contentContainer{
+    width: 50%;
+    height: 100%;
+    /* background-color: red; */
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+}
+
+#addTaskButton{
+    width: 70%;
+    height: 10vh;
+    background-color: #303030;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    font-size: 4vh;
+    font-weight: bold;
+    color: #ffffffc0;
+    transition: all 0.5s ease-in-out;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+}
+
+#addTaskButton:hover{
+    border: 1px solid #287a3e;
+    color: #287a3e;
+    cursor: pointer;
+    transition: all 0.5s ease-in-out;
+} 
+
+#taskContainer{
+    min-width: 100%;
+    height: auto;
+    /* background-color: palegreen; */
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 2vh;
+}
+
+.taskCard{
+    width: 80%;
+    height: 25vh;
+    background-color: #303030;
 }
 
 /* Estilo rodapé */
