@@ -1,0 +1,46 @@
+V1 - HTML
+<!-- <header>
+        <h1 id="pageTitle">📝Tasklist</h1>
+    </header>
+
+    <main>
+        <div id="contentContainer">
+            <div id="taskContainer"></div>
+            <div id="addTaskContainer">
+                <textarea id="description" placeholder="New Task"></textarea><button id="addTaskButton">+</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <h6 id="pageCreator">yurelima016 ©</h6>
+    </footer> -->
+
+V1 - JS
+
+document.addEventListener('DOMContentLoaded', () => {
+    const footerLink = document.querySelector('#pageCreator');
+    const addButton = document.querySelector('#addTaskButton');
+    const tasksContainer = document.querySelector('#taskContainer');
+    const taskDescription = document.querySelector('#description');
+
+    footerLink.addEventListener('click', () => {
+        window.location.href = 'https://github.com/yurelima016';
+    });
+    
+    addButton.addEventListener('click', () => {
+        const description = taskDescription.value.trim();
+
+        if (description === '') {
+            alert('Please enter a task description.');
+            return;
+        }
+
+        const task = document.createElement('div');
+        task.classList.add('taskCard');
+        task.textContent = description;
+        tasksContainer.appendChild(task);
+
+        taskDescription.value = '';        
+    });
+});
