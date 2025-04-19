@@ -71,6 +71,15 @@ main {
     grid-template-rows: auto auto 1fr;
     grid-gap: 2%;
     overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.taskCard.selected{
+    background-color: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    transform: scale(1.02);
+    transition: all 0.3s ease;
 }
 
 .taskPriority {
@@ -348,4 +357,9 @@ footer {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.8); /* escurece o fundo */
     z-index: 998; /* um nível abaixo do modal */
+}
+
+button:disabled {
+    opacity: 0.5;   
+    cursor: not-allowed;
 }
