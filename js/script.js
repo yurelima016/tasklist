@@ -1,34 +1,50 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const modalOverlay = document.querySelector('#modalOverlay');
     const optionsButton = document.querySelector('#optionsButton');
     const optionsIcon = document.querySelector('#optionsIcon');
     const floatingButtons = document.querySelector('.floating-buttons');
+    const editTask = document.querySelector('#edit-task');
+    const deleteTask = document.querySelector('#delete-task');
     const credits = document.querySelector('#credits');
     const taskContainer = document.querySelector('#taskContainer');
-    const modalOverlay = document.querySelector('#modalOverlay');
     const modal = document.querySelector('.taskModal');
+    const taskForm = document.getElementById('taskModalForm');
+    const modalTitle = document.querySelector('#taskModalTitle');
     const openModal = document.querySelector('.openTaskModal');
     const closeModal = document.querySelector('.closeTaskModal');
     const cancel = document.querySelector('#cancel');
-    const taskForm = document.getElementById('taskModalForm');
-    const deleteTask = document.querySelector('#delete-task');
-    const editTask = document.querySelector('#edit-task');
-    const modalTitle = document.querySelector('#taskModalTitle');
+    
     let taskBeingEdited = null;
     let isViewMode = false;
     editTask.disabled = true;
     deleteTask.disabled = true;
+    
+    // Set overlay (ON/OFF)
+    function overlayState(){
+        if (modalOverlay.style.display = 'block'){
+            modalOverlay.style.display = 'none'
+        }
+        else{
+            modal.style.display = 'block'
+        }
+    }
 
-   
-    optionsButton.addEventListener('click', () => {
+    // Update icon for options button 
+    function updateOptionButtonIcon(){
         if (optionsIcon.classList.contains('bi-list')) {
             optionsIcon.classList.remove('bi-list');
             optionsIcon.classList.add('bi-x-lg');
             floatingButtons.classList.add('show');
-        } else {
+        }
+         else {
             optionsIcon.classList.remove('bi-x-lg');
             optionsIcon.classList.add('bi-list');
             floatingButtons.classList.remove('show');
         }
+    }
+
+    optionsButton.addEventListener('click', () => {
+        updateOptionButtonIcon();
     });
 
     credits.addEventListener('click', () => {

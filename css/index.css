@@ -33,7 +33,7 @@ body {
     flex-wrap: wrap;
 }
 
-/* Header */
+/* Setting style of header, and title of page  */
 header {
     width: 100%;
     height: 10vh;
@@ -49,11 +49,22 @@ header {
     align-content: center;
 }
 
-/* Main */
+/* Setting style of main, overlay and container of task cards*/
 main {
     width: 92%;
     min-height: 85vh;
     padding: 2vh;
+}
+
+#modalOverlay {
+    display: none; /* começa escondido */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* escurece o fundo */
+    z-index: 998; /* um nível abaixo do modal */
 }
 
 #taskContainer {
@@ -62,6 +73,7 @@ main {
     gap: 1vw;
 }
 
+/* Defining the style of the task cards and their child elements */
 .taskCard {
     width: 32.5%;
     height: 35vh;
@@ -122,7 +134,7 @@ main {
     text-overflow: ellipsis;
 }
 
-/* Aside */
+/* Setting style of aside and actions buttons */
 aside {
     width: 8%;
     min-height: 85vh;
@@ -134,6 +146,28 @@ aside {
     padding-bottom: 2vh;
 }
 
+/* Style of main button */
+#optionsButton {
+    width: 50%;
+    height: 9.5%;
+    border: none;
+    border-radius: 50%;
+    background-color: var(--save-button-color);
+    color: var(--main-text-color);
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+#optionsButton i {
+    font-size: 1em;
+}
+
+/* Action buttons style */
 .floating-buttons {
     display: flex;
     flex-direction: column;
@@ -163,33 +197,13 @@ aside {
     transition: background-color 0.2s;
 }
 
-/* Hover cores dos mini botões */
+/* Hover colors of action buttons */
 .mini-btn:nth-child(1):hover { background-color: var(--priority-low-color); }
 .mini-btn:nth-child(2):hover { background-color: var(--priority-medium-color); }
 .mini-btn:nth-child(3):hover { background-color: var(--priority-high-color); }
 
-/* Botão principal */
-#optionsButton {
-    width: 50%;
-    height: 9.5%;
-    border: none;
-    border-radius: 50%;
-    background-color: var(--save-button-color);
-    color: var(--main-text-color);
-    font-size: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    transition: transform 0.3s ease;
-    cursor: pointer;
-}
 
-#optionsButton i {
-    font-size: 1em;
-}
-
-/* Footer */
+/* Setting footer style */
 footer {
     width: 100%;
     height: 5vh;
@@ -205,30 +219,21 @@ footer {
     cursor: pointer;
 }
 
-/* Modal */
-.taskModal {
-    display: none;
-    position: fixed;
-    z-index: 999;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-}
-
+/* Defining the style of the modal and their child elements */
 #taskModal {
+    width: 30vw;
+    height: 70vh;
+    display: none;
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 30vw;
-    height: 70vh;
     background-color: var(--modal-bg-color);
     color: var(--main-text-color);
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-    padding: 0;
     animation: modalFade 0.3s ease-out;
+    z-index: 999;
 }
 
 .taskModalContent {
@@ -237,6 +242,7 @@ footer {
     padding: 3%;
 }
 
+/* Modal header style */
 #taskModalHeader {
     width: 100%;
     height: 15%;
@@ -256,13 +262,17 @@ footer {
     align-items: center;
     cursor: pointer;
     font-size: 2rem;
+    background-color: transparent;
+    outline: none;
+    border: none;
     transition: color 0.2 ease;
 }
 
-.closeModal:hover {
+.closeTaskModal:hover {
     color: var(--delete-button-color);
 }
 
+/* Modal form style */
 #taskModalForm {
     width: 100%;
     height: 85%;
@@ -284,18 +294,20 @@ footer {
     color: var(--secondary-text-color);
 }
 
-.formGroup input[type="text"],
-.formGroup textarea {
+.inputStyle{
     width: 100%;
-    height: 5vh;
+    padding: 2%;
     background-color: var(--card-bg-color);
     color: var(--main-text-color);
     border: 1px solid var(--border-color);
     border-radius: 8px;
-    padding: 8px;
 }
 
-.formGroup textarea {
+#title {
+    height: 5vh;
+}
+
+#description {
     height: 25vh;
     resize: none;
 }
@@ -339,6 +351,10 @@ footer {
     background-color: var(--hover-button-color);
 }
 
+.taskFormActions button:disabled {
+    opacity: 0.5;   
+    cursor: not-allowed;
+}
 @keyframes modalFade {
     from {
         opacity: 0;
@@ -350,18 +366,4 @@ footer {
     }
 }
 
-#modalOverlay {
-    display: none; /* começa escondido */
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8); /* escurece o fundo */
-    z-index: 998; /* um nível abaixo do modal */
-}
 
-button:disabled {
-    opacity: 0.5;   
-    cursor: not-allowed;
-}
