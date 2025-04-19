@@ -5,14 +5,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const credits = document.querySelector('#credits');
     const taskContainer = document.querySelector('#taskContainer');
     const modalOverlay = document.querySelector('#modalOverlay');
-    const modal = document.querySelector('.modal');
-    const openModal = document.querySelector('.openModal');
-    const closeModal = document.querySelector('.closeModal');
+    const modal = document.querySelector('.taskModal');
+    const openModal = document.querySelector('.openTaskModal');
+    const closeModal = document.querySelector('.closeTaskModal');
     const cancel = document.querySelector('#cancel');
-    const taskForm = document.getElementById('taskForm');
+    const taskForm = document.getElementById('taskModalForm');
     const deleteTask = document.querySelector('#delete-task');
     const editTask = document.querySelector('#edit-task');
-    const modalTitle = document.querySelector('#modalHeader h1');
+    const modalTitle = document.querySelector('#taskModalTitle');
     let taskBeingEdited = null;
     let isViewMode = false;
     editTask.disabled = true;
@@ -263,7 +263,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.addEventListener('click', (event) => {
         const clickedInsideTask = event.target.closest('.taskCard');
         const clickedOnButton = event.target.closest('.mini-btn, #optionsButton');
-        const modalIsOpen = document.querySelector('.modal').style.display === 'block';
+        const modalIsOpen = document.querySelector('.taskModal').style.display === 'block';
     
         if (!clickedInsideTask && !clickedOnButton && !modalIsOpen) {
             document.querySelectorAll('.taskCard.selected').forEach(card => {
