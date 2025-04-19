@@ -12,8 +12,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const taskForm = document.getElementById('taskForm');
     const deleteTask = document.querySelector('#delete-task');
     const editTask = document.querySelector('#edit-task');
+    const modalTitle = document.querySelector('#modalHeader h1');
     let taskBeingEdited = null;
+    let isViewMode = false;
+    editTask.disabled = true;
+    deleteTask.disabled = true;
 
+   
     optionsButton.addEventListener('click', () => {
         if (optionsIcon.classList.contains('bi-list')) {
             optionsIcon.classList.remove('bi-list');
@@ -31,19 +36,39 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     openModal.addEventListener('click', () => {
+        modalTitle.innerText = 'Create New Task';
         modalOverlay.style.display = 'block';
         modal.style.display = 'block';
     });
 
     closeModal.addEventListener('click', () => {
+        closeModalWindow();
         modalOverlay.style.display = 'none';
         modal.style.display = 'none';
     });
 
     cancel.addEventListener('click', () => {
+        closeModalWindow();
         modalOverlay.style.display = 'none';
         modal.style.display = 'none';
     });
+
+    function closeModalWindow() {
+        modalOverlay.style.display = 'none';
+        modal.style.display = 'none';
+    
+        // Reabilitar campos
+        document.getElementById('title').disabled = false;
+        document.getElementById('description').disabled = false;
+        document.querySelectorAll('input[name="priority"]').forEach(input => input.disabled = false);
+    
+        // Mostrar botões novamente
+        document.getElementById('saveBtn').style.display = 'inline-block';
+        document.getElementById('cancel').style.display = 'inline-block';
+    
+        isViewMode = false;
+        taskForm.reset();
+    }    
 
     window.onclick = function(event) {
         if (event.target === modalOverlay) {
@@ -97,24 +122,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
     taskForm.addEventListener('submit', (event) => {
         event.preventDefault();
-
+    
+        if (isViewMode) {
+            return; // Se estiver no modo visualização, não faz nada
+        }
+    
         const titleValue = document.getElementById('title').value.trim();
         const descriptionValue = document.getElementById('description').value.trim();
         const priorityInput = document.querySelector('input[name="priority"]:checked');
         const priorityValue = priorityInput ? priorityInput.value : '';
-
+    
         if (!titleValue || !descriptionValue || !priorityValue) {
             alert('Por favor, preencha todos os campos!');
             return;
         }
-
+    
         if (taskBeingEdited) {
             taskBeingEdited.querySelector('.taskTitle').innerText = titleValue;
             taskBeingEdited.querySelector('.taskDescription').innerText = descriptionValue;
-
+    
             const badge = taskBeingEdited.querySelector('.taskPriority span');
             badge.className = 'badge';
-
+    
             if (priorityValue === 'low') {
                 badge.classList.add('text-bg-success');
                 badge.innerText = 'Baixa';
@@ -125,14 +154,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 badge.classList.add('text-bg-danger');
                 badge.innerText = 'Alta';
             }
-
+    
             taskBeingEdited.classList.remove('selected');
             taskBeingEdited = null;
         } else {
             createNewTask(titleValue, descriptionValue, priorityValue);
         }
-
+    
         modal.style.display = 'none';
+        modalOverlay.style.display = 'none';
         taskForm.reset();
     });
 
@@ -142,12 +172,56 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('.taskCard').forEach(card => card.classList.remove('selected'));
             taskCard.classList.add('selected');
         }
+
+        editTask.disabled = false;
+        deleteTask.disabled = false;
+
+        const expandIcon = event.target.closest('.expandTask i');
+        if (expandIcon) {
+            openModalWithViewMode(taskCard);
+        };
     });
+
+    function openModalWithViewMode(taskCard) {
+        const title = taskCard.querySelector('.taskTitle').innerText;
+        const description = taskCard.querySelector('.taskDescription').innerText;
+        const priority = taskCard.querySelector('.taskPriority .badge').innerText;
+    
+        modalTitle.innerText = 'View Task';
+    
+        document.getElementById('title').value = title;
+        document.getElementById('description').value = description;
+    
+        const priorityNormalized = (priority === 'Baixa') ? 'low' : (priority === 'Média') ? 'medium' : 'high';
+        const priorityInput = document.querySelector(`input[name="priority"][value="${priorityNormalized}"]`);
+        if (priorityInput) {
+            priorityInput.checked = true;
+        }
+    
+        // Desabilita campos
+        document.getElementById('title').disabled = true;
+        document.getElementById('description').disabled = true;
+        document.querySelectorAll('input[name="priority"]').forEach(input => input.disabled = true);
+    
+        // Esconde botões de Save e Cancel
+        document.getElementById('saveBtn').style.display = 'none'; // ID do botão de Save
+        document.getElementById('cancel').style.display = 'none'; // Botão de Cancelar
+    
+        isViewMode = true;
+    
+        modalOverlay.style.display = 'block';
+        modal.style.display = 'block';
+    }
 
     deleteTask.addEventListener('click', () => {
         const selectedTask = document.querySelector('.taskCard.selected');
         if (selectedTask) {
-            selectedTask.remove();
+            const confirmation = confirm('Are you sure you want to delete this task?');
+            if (confirmation){
+                selectedTask.remove();
+                editTask.disabled = true;
+                deleteTask.disabled = true;
+            }
         }
     });
 
@@ -171,6 +245,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 priorityInput.checked = true;
             }
 
+            modalTitle.innerText = 'Edit Task';
+            modalOverlay.style.display = 'block';
             modal.style.display = 'block';
         } else {
             alert('Selecione uma tarefa para editar!');
@@ -184,4 +260,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
 
+      document.addEventListener('click', (event) => {
+        const clickedInsideTask = event.target.closest('.taskCard');
+        const clickedOnButton = event.target.closest('.mini-btn, #optionsButton');
+        const modalIsOpen = document.querySelector('.modal').style.display === 'block';
+    
+        if (!clickedInsideTask && !clickedOnButton && !modalIsOpen) {
+            document.querySelectorAll('.taskCard.selected').forEach(card => {
+                card.classList.remove('selected');
+            });
+    
+            // Desativa botões
+            editTask.disabled = true;
+            deleteTask.disabled = true;
+        }
+    });
 });
