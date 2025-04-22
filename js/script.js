@@ -12,135 +12,129 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalTitle = document.querySelector('#taskModalTitle');
     const openModal = document.querySelector('.openTaskModal');
     const closeModal = document.querySelector('.closeTaskModal');
-    const cancel = document.querySelector('#cancel');
-    
+    const cancel = document.querySelector('#cancelBtn');
     let taskBeingEdited = null;
     let isViewMode = false;
     editTask.disabled = true;
     deleteTask.disabled = true;
-    
-    // Set overlay (ON/OFF)
-    function overlayState(){
-        if (modalOverlay.style.display = 'block'){
-            modalOverlay.style.display = 'none'
-        }
-        else{
-            modal.style.display = 'block'
-        }
-    }
 
-    // Update icon for options button 
-    function updateOptionButtonIcon(){
-        if (optionsIcon.classList.contains('bi-list')) {
-            optionsIcon.classList.remove('bi-list');
-            optionsIcon.classList.add('bi-x-lg');
-            floatingButtons.classList.add('show');
-        }
-         else {
-            optionsIcon.classList.remove('bi-x-lg');
-            optionsIcon.classList.add('bi-list');
-            floatingButtons.classList.remove('show');
-        }
-    }
 
-    optionsButton.addEventListener('click', () => {
-        updateOptionButtonIcon();
-    });
-
-    credits.addEventListener('click', () => {
-        window.location.href = 'https://github.com/yurelima016';
-    });
-
-    openModal.addEventListener('click', () => {
-        modalTitle.innerText = 'Create New Task';
-        modalOverlay.style.display = 'block';
-        modal.style.display = 'block';
-    });
-
-    closeModal.addEventListener('click', () => {
-        closeModalWindow();
-        modalOverlay.style.display = 'none';
-        modal.style.display = 'none';
-    });
-
-    cancel.addEventListener('click', () => {
-        closeModalWindow();
-        modalOverlay.style.display = 'none';
-        modal.style.display = 'none';
-    });
-
+    // Close modal window and reset form
     function closeModalWindow() {
         modalOverlay.style.display = 'none';
         modal.style.display = 'none';
     
-        // Reabilitar campos
+        // Re-enable form fields
         document.getElementById('title').disabled = false;
         document.getElementById('description').disabled = false;
         document.querySelectorAll('input[name="priority"]').forEach(input => input.disabled = false);
     
-        // Mostrar botões novamente
+        // Show buttons again
         document.getElementById('saveBtn').style.display = 'inline-block';
-        document.getElementById('cancel').style.display = 'inline-block';
+        document.getElementById('cancelBtn').style.display = 'inline-block';
     
         isViewMode = false;
         taskForm.reset();
-    }    
-
-    window.onclick = function(event) {
-        if (event.target === modalOverlay) {
-            modalOverlay.style.display = 'none';
-            modal.style.display = 'none';
-        }
     }
 
+    // Create card for a new task
     function createNewTask(title, description, priority) {
+        
+        // Card creation
         const task = document.createElement('div');
         task.classList.add('taskCard');
 
+        // Priority badge creation
         const taskPriority = document.createElement('div');
         taskPriority.classList.add('taskPriority');
         const taskPriorityText = document.createElement('span');
         taskPriorityText.classList.add('badge');
 
-        if (priority === 'low') {
-            taskPriorityText.classList.add('text-bg-success');
-            taskPriorityText.innerText = 'Baixa';
-        } else if (priority === 'medium') {
-            taskPriorityText.classList.add('text-bg-warning');
-            taskPriorityText.innerText = 'Média';
-        } else if (priority === 'high') {
-            taskPriorityText.classList.add('text-bg-danger');
-            taskPriorityText.innerText = 'Alta';
-        }
-
+        // Expand task card button creation
         const expandTask = document.createElement('div');
         expandTask.classList.add('expandTask');
         const expandIcon = document.createElement('i');
         expandIcon.classList.add('bi', 'bi-arrows-angle-expand');
 
+        // Task title creation
         const taskTitle = document.createElement('h4');
         taskTitle.classList.add('taskTitle');
+
+        // Task description creation
         const taskDescription = document.createElement('p');
         taskDescription.classList.add('taskDescription');
 
-        taskTitle.innerText = title;
-        taskDescription.innerText = description;
-
+        // Appending elements to the task card
         task.appendChild(taskPriority);
         taskPriority.appendChild(taskPriorityText);
         task.appendChild(expandTask);
         expandTask.appendChild(expandIcon);
         task.appendChild(taskTitle);
         task.appendChild(taskDescription);
-
+        
+        // Defining form field values
+        if (priority === 'low') {
+            taskPriorityText.classList.add('text-bg-success');
+            taskPriorityText.innerText = 'Low';
+        } else if (priority === 'medium') {
+            taskPriorityText.classList.add('text-bg-warning');
+            taskPriorityText.innerText = 'Medium';
+        } else if (priority === 'high') {
+            taskPriorityText.classList.add('text-bg-danger');
+            taskPriorityText.innerText = 'High';
+        }
+        taskTitle.innerText = title;
+        taskDescription.innerText = description;
+        
+        // Appending task to the container
         taskContainer.appendChild(task);
     };
 
+    // Detect click on options button
+    optionsButton.addEventListener('click', () => {
+        updateOptionButtonIcon();
+    });
+
+    // Detect click on the credits
+    credits.addEventListener('click', () => {
+        window.location.href = 'https://github.com/yurelima016';
+    });
+    
+    // Detect click on the floating button (New Task)
+    openModal.addEventListener('click', () => {
+        modalTitle.innerText = 'Create New Task';
+        modalOverlay.style.display = 'block';
+        modal.style.display = 'block';
+    });
+
+    // Detect click on the close button (X) of the modal
+    closeModal.addEventListener('click', () => {
+        closeModalWindow();
+        modalOverlay.style.display = 'none';
+        modal.style.display = 'none';
+    });
+
+    // Detect click on the cancel button of the modal
+    cancel.addEventListener('click', () => {
+        closeModalWindow();
+        modalOverlay.style.display = 'none';
+        modal.style.display = 'none';
+    });
+
+    // Detects click outside modal to close it
+    window.onclick = function(event) {
+        if (event.target === modalOverlay) {
+            modalOverlay.style.display = 'none';
+            modal.style.display = 'none';
+        }
+    }
+    
+
     taskForm.addEventListener('submit', (event) => {
         event.preventDefault();
-    
+         
         if (isViewMode) {
-            return; // Se estiver no modo visualização, não faz nada
+            return; 
         }
     
         const titleValue = document.getElementById('title').value.trim();
@@ -217,11 +211,15 @@ document.addEventListener('DOMContentLoaded', () => {
         // Desabilita campos
         document.getElementById('title').disabled = true;
         document.getElementById('description').disabled = true;
-        document.querySelectorAll('input[name="priority"]').forEach(input => input.disabled = true);
+        document.querySelectorAll('input[name="priority"]').forEach(input => {
+            if (input.value !== priorityNormalized){
+                input.disabled = true;
+            }
+        });
     
         // Esconde botões de Save e Cancel
         document.getElementById('saveBtn').style.display = 'none'; // ID do botão de Save
-        document.getElementById('cancel').style.display = 'none'; // Botão de Cancelar
+        document.getElementById('cancelBtn').style.display = 'none'; // Botão de Cancelar
     
         isViewMode = true;
     
@@ -276,7 +274,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
 
-      document.addEventListener('click', (event) => {
+    document.addEventListener('click', (event) => {
         const clickedInsideTask = event.target.closest('.taskCard');
         const clickedOnButton = event.target.closest('.mini-btn, #optionsButton');
         const modalIsOpen = document.querySelector('.taskModal').style.display === 'block';
