@@ -44,7 +44,7 @@ export function mountListeners(){
         functions.selectTaskCard(clickedTaskCard);
         functions.enableEditAndDeleteButtons();
 
-        if (clickedExpandButton){
+        if (clickedExpandButton && event.target.tagName.toLowerCase() === 'i'){
             console.log('Teste');
             functions.openTaskModal('view', clickedTaskCard);
         };
@@ -52,21 +52,26 @@ export function mountListeners(){
 
     appElements.modal.taskForm.addEventListener('submit', (event) => {
         event.preventDefault();
-
-        appElements.modal.taskForm.reset();
         
         const title = appElements.modal.taskFormTitle.value.trim();
         const description = appElements.modal.taskFormDescription.value.trim();
         const priorityInput = Array.from(appElements.modal.taskFormPriority).find(input => input.checked);
         const priority = priorityInput ? priorityInput.value : 'low';
 
+        if (currentMode === 'create'){
+            functions.createNewTask(title, description, priority);
+        }
+        else if(currentMode === 'edit' && currentTaskCard){
+            functions.updateTask(currentTaskCard, title, description, priority);
+        }
 
         console.log('Formulário enviado!');
         console.log('Título:', title);
         console.log('Descrição:', description);
         console.log('Prioridade:', priority);
-
+        
         functions.closeTaskModal();
+        appElements.modal.taskForm.reset();
     });
 
 

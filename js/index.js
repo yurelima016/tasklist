@@ -5,6 +5,14 @@ export const appElements = {};
 export let currentMode = 'create';
 export let currentTaskCard = null;
 
+export function setCurrentMode(mode){
+    currentMode = mode;
+}
+
+export function setCurrentTaskCard(taskCard){
+    currentTaskCard = taskCard;
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     appElements.main = {
         modalOverlay: document.getElementById('modalOverlay'),

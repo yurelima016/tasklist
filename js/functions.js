@@ -1,4 +1,4 @@
-import { appElements, currentMode, currentTaskCard} from './index.js';
+import { appElements, setCurrentMode, setCurrentTaskCard} from './index.js';
 
 // Show more options
 export function toggleFloatingButtons() {
@@ -20,8 +20,8 @@ export function enableEditAndDeleteButtons(){
 
 export function openTaskModal(mode, taskCard = null){
 
-    currentMode = mode;
-    currentTaskCard = taskCard;
+    setCurrentMode(mode);
+    setCurrentTaskCard(taskCard);
 
     const modalTitle = appElements.modal.modalTitle;
     const modalFormTitle = appElements.modal.taskFormTitle;
@@ -90,6 +90,10 @@ export function deleteTaskModal(selectedCard){
     const confirmation = confirm('Are you sure you want to delete this task?');
     if(confirmation){
         selectedCard.remove();
+        appElements.main.editTask.disabled = true;
+        appElements.main.deleteTask.disabled = true;
+
+        console.log('Task Deletada');
     }
 }
 
@@ -164,16 +168,21 @@ export function createNewTask(title, description, priority) {
 
 export function updateTask(taskCard, title, description, priority){
     taskCard.querySelector('.taskTitle').textContent = title;
-    taskCard.querySelector('taskDescription').textContent = title;
+    taskCard.querySelector('.taskDescription').textContent = description;
     const badge = taskCard.querySelector('.badge');
-    badge.textContent = priority;
-    if (priority === 'low'){
+
+    badge.classList.remove('text-bg-success', 'text-bg-warning', 'text-bg-danger');
+
+    if (priority.toLowerCase() === 'low'){
+        badge.textContent = 'Low';
         badge.classList.add('text-bg-success');
     }
-    else if(priority === 'medium'){
+    else if(priority.toLowerCase() === 'medium'){
+        badge.textContent = 'Medium';
         badge.classList.add('text-bg-warning');
     }
-    else if (priority === 'high'){
+    else if (priority.toLowerCase() === 'high'){
+        badge.textContent = 'High';
         badge.classList.add('text-bg-danger');
     }
 
