@@ -8,35 +8,20 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
     <link rel="stylesheet" href="css/index.css">
-    <!--------------------->
 
     <title>TaskList</title>
 </head>
 <body>
-
-    <!-- Overlay for when the modal is active -->
+    <!-- Overlay for when modal is open -->
     <div id="modalOverlay" aria-hidden="true"></div>
-    <!-- ------------------------------------ -->
-
+    
+    <!-- Defaut pages elements -->
     <header>
         <h1 id="pageTitle">📝Tasklist</h1>
     </header>
 
     <main>
-        <div id="taskContainer">
-            <div class="taskCard">
-                <div class="taskPriority"><span class="badge text-bg-success">Low</span></div>
-                <div class="expandTask"><i class="bi bi-arrows-angle-expand"></i></div>
-                <h4 class="taskTitle">Titulo da Task testando se o texto vai parar de aparecer, testando testando testando testando testando</h4>
-                <p class="taskDescription">Lorem Ipsum is simply dummy text of the printing and typesetting industry...</p>
-            </div>
-            <div class="taskCard">
-                <div class="taskPriority"><span class="badge text-bg-warning">Medium</span></div>
-                <div class="expandTask"><i class="bi bi-arrows-angle-expand"></i></div>
-                <h4 class="taskTitle">Task Simples</h4>
-                <p class="taskDescription">Descrição simples apenas para teste</p>
-            </div>
-        </div>
+        <div id="taskContainer"></div>
     </main>
     
     <aside>
@@ -88,5 +73,6 @@
     <!-- Script links -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
     <script type="module" src="./js/index.js"></script>
+    
 </body>
 </html>
